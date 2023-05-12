@@ -20,7 +20,7 @@ public class ExplanationTextVisibility : MonoBehaviour
     /// Link to the explanation text manager.
     /// </summary>
     [Tooltip("Link to the explanation text manager.")]
-    public GameObject explanationTextManager;
+    public GameObject explanationTextManagerGameObject;
 
     /// <summary>
     /// Link to the "Next text" button.
@@ -34,10 +34,17 @@ public class ExplanationTextVisibility : MonoBehaviour
     [Tooltip("Link to the \"Show explanations\" button.")]
     public GameObject showExplanationsButton;
 
+    /// <summary>
+    /// Link to the ExplanationTextManager of explanationTextManagerGameObject.
+    /// </summary>
+    private ExplanationTextManager explanationTextManager;
+
 
     // Start is called before the first frame update
     void Start()
     {
+        explanationTextManager = explanationTextManagerGameObject.GetComponent<ExplanationTextManager>();
+        explanationTextManager.SetMenuVisibilityManager(this);
         Open();
     }
 
@@ -46,7 +53,7 @@ public class ExplanationTextVisibility : MonoBehaviour
     /// </summary>
     public void Open()
     {
-        DisplayMenuElements(true);
+        SetMenuVisibility(true);
         Time.timeScale= 0;
     }
 
@@ -55,18 +62,22 @@ public class ExplanationTextVisibility : MonoBehaviour
     /// </summary>
     public void Close()
     {
-        DisplayMenuElements(false);
+        SetMenuVisibility(false);
         Time.timeScale = 1;
     }
 
 
-    private void DisplayMenuElements(bool pDisplay)
+    /// <summary>
+    /// Sets the menu visibility and resets the menu elements if needed.
+    /// </summary>
+    /// <param name="pDisplay">New menu visibility</param>
+    private void SetMenuVisibility(bool pDisplay)
     {
         background.SetActive(pDisplay);
-        explanationTextManager.SetActive(pDisplay);
+        explanationTextManagerGameObject.SetActive(pDisplay);
         if(pDisplay)
         {
-            //TODO: Call explanation manager init function (ensure that the 1est text is displayed).
+            explanationTextManager.Reset();
         }
         nextTextButton.SetActive(pDisplay);
         showExplanationsButton.SetActive(!pDisplay);
