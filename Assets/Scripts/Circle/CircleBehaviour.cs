@@ -30,6 +30,16 @@ public class CircleBehaviour : MonoBehaviour
     /// </summary>
     public Material resolvedMaterial;
 
+    /// <summary>
+    /// Time before the circle Drops to the ground (stops following the player).
+    /// </summary>
+    public float timeBeforeDropToGround = 4;
+
+    /// <summary>
+    /// Time before the circle de-spawns after the ray hits it.
+    /// </summary>
+    public float timeBeforeDespawn = 3;
+
 
     /// <summary>
     /// This circle is following the player.
@@ -40,16 +50,6 @@ public class CircleBehaviour : MonoBehaviour
     /// This circle is waiting to be hit by the ray.
     /// </summary>
     private bool isWaitingForRay = false;
-
-    /// <summary>
-    /// Time before the circle Drops to the ground (stops following the player).
-    /// </summary>
-    private float timeBeforeDropToGround = 4;
-
-    /// <summary>
-    /// Time before the circle de-spawns after the ray hits it.
-    /// </summary>
-    private float timeBeforeDespawn = 3;
 
     /// <summary>
     /// The coroutine to handle the drop (stops following the player) of the circle.
@@ -107,9 +107,9 @@ public class CircleBehaviour : MonoBehaviour
         mesh.materials = lMaterials;
     }
 
-    void OnTriggerEnter(Collider other)
+    void OnCollisionEnter(Collision collision)
     {
-        if(other.gameObject.tag.Equals("Ray"))
+        if(collision.gameObject.tag.Equals("Ray"))
         {
             isWaitingForRay= false;
 
