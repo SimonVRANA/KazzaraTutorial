@@ -79,6 +79,15 @@ public class CircleBehaviour : MonoBehaviour
     }
 
     /// <summary>
+    /// The circle is following the player.
+    /// </summary>
+    /// <returns>The circle is following the player.</returns>
+    public bool IsFollowingPlayer()
+    {
+        return isFollowingPlayer;
+    }
+
+    /// <summary>
     /// Initialize the Circle, and begins it's behavior.
     /// </summary>
     public void Initialize()
