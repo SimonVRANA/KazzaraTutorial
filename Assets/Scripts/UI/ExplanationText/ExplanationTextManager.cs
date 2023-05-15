@@ -4,7 +4,7 @@ using UnityEngine;
 
 /// <summary>
 /// This class is used to select the currently display text in the explanation menu.
-/// I know Inity added a class for elements that doesen't need the Unity life cycle (Awake, Start, Update,...) but I'm not familar with it so I used a MonoBehaviour.
+/// I know Unity added a class for elements that doesn't need the Unity life cycle (Awake, Start, Update,...) but I'm not familiar with it so I used a MonoBehaviour.
 /// </summary>
 public class ExplanationTextManager : MonoBehaviour
 {

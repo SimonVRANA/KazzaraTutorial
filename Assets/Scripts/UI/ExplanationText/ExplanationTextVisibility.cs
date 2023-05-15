@@ -35,6 +35,11 @@ public class ExplanationTextVisibility : MonoBehaviour
     public GameObject showExplanationsButton;
 
     /// <summary>
+    /// Link to the game manager.
+    /// </summary>
+    public GameManager gameManager;
+
+    /// <summary>
     /// Link to the ExplanationTextManager of explanationTextManagerGameObject.
     /// </summary>
     private ExplanationTextManager explanationTextManager;
@@ -64,6 +69,7 @@ public class ExplanationTextVisibility : MonoBehaviour
     {
         SetMenuVisibility(false);
         Time.timeScale = 1;
+        gameManager.Initialize();
     }
 
 

@@ -3,8 +3,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class manages the behavior of the circle through it different states.
+/// </summary>
 public class CircleBehaviour : MonoBehaviour
 {
+    /// <summary>
+    /// Link to the GameManager
+    /// </summary>
+    [HideInInspector]
+    public GameManager gameManager;
+
+    /// <summary>
+    /// Link to the CircleFactory
+    /// </summary>
+    [HideInInspector]
+    public CircleFactory circleFactory;
+
+
     /// <summary>
     /// Link to the player game object.
     /// </summary>
@@ -51,24 +67,6 @@ public class CircleBehaviour : MonoBehaviour
     /// </summary>
     private bool isWaitingForRay = false;
 
-    /// <summary>
-    /// The coroutine to handle the drop (stops following the player) of the circle.
-    /// </summary>
-    private IEnumerator waitBeforeDropCoroutine;
-
-    /// <summary>
-    /// The coroutine to handle the despawn of the circle.
-    /// </summary>
-    private IEnumerator waitBeforeDestroyCoroutine;
-
-    void Start()
-    {
-        waitBeforeDropCoroutine = WaitBeforeDrop();
-        waitBeforeDestroyCoroutine = WaitBeforeDespawn();
-
-        Initialize();
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -99,12 +97,14 @@ public class CircleBehaviour : MonoBehaviour
         lMaterials[0] = followPlayerMaterial;
         mesh.materials = lMaterials;
 
-        StopCoroutine(waitBeforeDropCoroutine);
-        StopCoroutine(waitBeforeDestroyCoroutine);
+        StopAllCoroutines();
 
-        StartCoroutine(waitBeforeDropCoroutine);
+        StartCoroutine(WaitBeforeDrop());
     }
 
+    /// <summary>
+    /// Waits before dropping (stops following the player).
+    /// </summary>
     private IEnumerator WaitBeforeDrop()
     {
         yield return new WaitForSeconds(timeBeforeDropToGround);
@@ -114,11 +114,14 @@ public class CircleBehaviour : MonoBehaviour
         Material[] lMaterials = mesh.materials;
         lMaterials[0] = waitForRayMaterial;
         mesh.materials = lMaterials;
+
+        gameManager.OnCirclePlaced();
     }
 
     void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag.Equals("Ray"))
+        if(collision.gameObject.tag.Equals("Ray")
+           && isWaitingForRay)
         {
             isWaitingForRay= false;
 
@@ -126,13 +129,26 @@ public class CircleBehaviour : MonoBehaviour
             lMaterials[0] = resolvedMaterial;
             mesh.materials = lMaterials;
 
-            StartCoroutine(waitBeforeDestroyCoroutine);
+            gameManager.OnCircleResolved();
+
+            StartCoroutine(WaitBeforeDespawn());
         }
     }
 
-        private IEnumerator WaitBeforeDespawn()
+    /// <summary>
+    /// Wait before despawning.
+    /// </summary>
+    private IEnumerator WaitBeforeDespawn()
     {
         yield return new WaitForSeconds(timeBeforeDespawn);
-        //TODO: Call the factory to be stored.
+        Store();
+    }
+
+    /// <summary>
+    /// Stores itself in the factory.
+    /// </summary>
+    public void Store()
+    {
+        circleFactory.StoreCircle(this.gameObject);
     }
 }

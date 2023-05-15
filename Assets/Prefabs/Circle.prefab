@@ -111,13 +111,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30485883fc646aa47a3f1cd96dc9451f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
+  circleFactory: {fileID: 0}
   player: {fileID: 0}
   mesh: {fileID: 2748231461320797250}
   followPlayerMaterial: {fileID: 2100000, guid: d9ed87a19b7501244b1d1c51a8f8c841, type: 2}
   waitForRayMaterial: {fileID: 2100000, guid: 70bf2ddbbac7a63459b37ce691b13156, type: 2}
   resolvedMaterial: {fileID: 2100000, guid: d91108996298eda488f745532266968e, type: 2}
   timeBeforeDropToGround: 4
-  timeBeforeDespawn: 3
+  timeBeforeDespawn: 30
 --- !u!54 &3833941534969656122
 Rigidbody:
   m_ObjectHideFlags: 0

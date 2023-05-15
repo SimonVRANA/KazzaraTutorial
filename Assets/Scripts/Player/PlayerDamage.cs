@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class manages the "damage" taken by the player.
+/// currently it only changes the material of the player.
+/// </summary>
 public class PlayerDamage : MonoBehaviour
 {
     /// <summary>

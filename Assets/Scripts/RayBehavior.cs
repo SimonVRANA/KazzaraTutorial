@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class manages the behavior of the ray.
+/// </summary>
 public class RayBehavior : MonoBehaviour
 {
     /// <summary>
